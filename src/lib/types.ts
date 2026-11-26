@@ -4,9 +4,22 @@ export type ActionItem = {
   priority: "high" | "medium" | "low";
 };
 
+export type Topic = {
+  title: string;
+  detail: string;
+};
+
+export type ActiveUser = {
+  name: string;
+  messageCount: number;
+};
+
 export type AnalysisResult = {
   summary: string;
   actionItems: ActionItem[];
+  topics: Topic[];
+  activeUsers: ActiveUser[];
+  mood: string;
   messageCount: number;
   truncated: boolean;
 };

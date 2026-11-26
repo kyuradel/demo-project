@@ -1,5 +1,5 @@
 import Papa from "papaparse";
-import type { ChatMessage } from "./types";
+import type { ActiveUser, ChatMessage } from "./types";
 
 const TIMESTAMP_KEYS = ["timestamp", "time", "date", "datetime", "sent_at"];
 const SENDER_KEYS = ["sender", "author", "user", "username", "name", "from"];
@@ -71,4 +71,18 @@ export function toTranscript(messages: ChatMessage[]): {
   }
 
   return { transcript, truncated, usedCount: usedLines.length };
+}
+
+export function topActiveUsers(messages: ChatMessage[], limit = 5): ActiveUser[] {
+  const counts = new Map<string, number>();
+  for (const m of messages) {
+    const name = m.sender?.trim();
+    if (!name) continue;
+    counts.set(name, (counts.get(name) ?? 0) + 1);
+  }
+
+  return [...counts.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, limit)
+    .map(([name, messageCount]) => ({ name, messageCount }));
 }

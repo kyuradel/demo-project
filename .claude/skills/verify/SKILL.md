@@ -37,6 +37,8 @@ curl -s -m 30 -X POST http://localhost:3100/api/analyze -F "file=@sample-chat.cs
 
 (`sample-chat.csv` lives at the repo root.) This is the step that actually exercises the Gemini call — lint/build only prove the code compiles, not that the prompt still produces parseable JSON or that a new field actually comes back populated.
 
+Make sure the dev server is NOT running with `MOCK_GEMINI=1` for this step — that env var short-circuits the real Gemini call and returns a canned response, which defeats the entire point of this step. Check `curl -s -X POST .../api/analyze ...` output for the `[MOCK]` prefix in `summary`; if you see it, restart the dev server without `MOCK_GEMINI` set.
+
 Check the JSON response for:
 - no `"error"` key
 - `summary` is a non-empty string

@@ -7,7 +7,11 @@
     "build": "next build",
     "start": "next start -p 3100",
     "lint": "eslint",
-    "test": "vitest run"
+    "test": "vitest run",
+    "type-check": "tsc --noEmit",
+    "check-schema": "node scripts/check-schema-sync.mjs",
+    "inspect-csv": "node --no-warnings --experimental-strip-types scripts/inspect-csv.mts",
+    "test-hook": "bash .claude/hooks/test-hook.sh"
   },
   "dependencies": {
     "@google/genai": "^3.6.1",
